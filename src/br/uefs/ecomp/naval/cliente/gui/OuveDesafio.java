@@ -12,9 +12,11 @@ public class OuveDesafio extends Thread {
 
 	private DatagramSocket socketCliente;
 	private boolean controleThread = true;
+	private MainView mv;
 
-	public OuveDesafio(DatagramSocket socketCliente) {
+	public OuveDesafio(DatagramSocket socketCliente, MainView mainView) {
 		this.socketCliente = socketCliente;
+		mv = mainView;
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class OuveDesafio extends Thread {
 
 							ChooseShip choose = new ChooseShip("eu", palavras[1].trim(), pacoteRetorno.getAddress(), pacoteRetorno.getPort(), socketCliente);
 							choose.show();
-							controleThread = false;
+							mv.fechar();
 						} else {
 							String frase = "naoAceito;";
 							byte[] dadosEnvio = frase.getBytes();
@@ -74,7 +76,7 @@ public class OuveDesafio extends Thread {
 									"Desafio aceito!");
 							ChooseShip choose = new ChooseShip("eu", palavras[1].trim(), pacoteRetorno.getAddress(), pacoteRetorno.getPort(), socketCliente);
 							choose.show();
-							controleThread = false;} else {
+							mv.fechar();;} else {
 							JOptionPane.showMessageDialog(null,
 									"Desafio nao foi aceito!");
 

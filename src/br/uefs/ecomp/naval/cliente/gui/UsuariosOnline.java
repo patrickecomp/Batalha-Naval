@@ -72,5 +72,9 @@ public class UsuariosOnline extends Thread{
 		}
 	}
 	
+	public void matarThread(){
+		trabalhaThread = false;
+	}
+	
 		
 }

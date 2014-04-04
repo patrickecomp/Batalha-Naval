@@ -119,7 +119,7 @@ public class Login {
         					String player = txtLogin.getText().trim();
         					MainView view = new MainView(player, socketCliente);
         					view.show();
-        					frame.dispose();	
+        					frame.dispose();
         				}
         			}catch(SocketTimeoutException ex){
         				//Reenvia pacote

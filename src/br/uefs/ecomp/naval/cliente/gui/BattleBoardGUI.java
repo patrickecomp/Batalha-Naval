@@ -88,6 +88,8 @@ public class BattleBoardGUI {
 				Icon icone = new ImageIcon(System.getProperty("user.dir") + File.separator+"images"+File.separator+imagens[i][j]);
 				JLabel lbl = new JLabel();
 				lbl.setIcon(icone);
+				lbl.setSize(59, 56);
+				lbl.setVisible(true);
 				board.add(lbl);
 			}
 		}
@@ -126,9 +128,8 @@ public class BattleBoardGUI {
 		System.out.println(URL);
 		Icon icon = new ImageIcon(URL);
 		JLabel result = new JLabel(icon); 
-		JFrame  v = new JFrame();
-		v.add(result);
-		v.pack();
+		result.setSize(59, 56);
+		result.setVisible(true);
 		
 		
 		if(status == 0 || status == 1){
@@ -146,12 +147,14 @@ public class BattleBoardGUI {
 		private InetAddress ip;
 		private int porta;
 		private boolean controle;
+		private int tiros;
 		
 		public ListenerInfo(InetAddress ip, int porta, DatagramSocket socketCliente) throws IOException{
 			socket = new DatagramSocket();
 			this.ip = ip;
 			this.porta = porta;
 			this.socket = socketCliente;
+			tiros = 0;
 			controle = true;
 			try{
 				byte[] info = new byte[2048];
@@ -208,10 +211,16 @@ public class BattleBoardGUI {
 						String image = datas[4];
 						int won = Integer.parseInt(datas[5]);
 						updateSquare(row, column, status, image);
+						tiros++;
 						controle = false;
 						if(won == 1){
-							JOptionPane.showMessageDialog(null, "You won");
+							JOptionPane.showMessageDialog(null, "Voce ganhou");
+							FimPartida fim = new FimPartida(tiros, socket, player2);
+							fim.show();
 							frame.dispose();
+							info = "Fim".getBytes();
+							send = new DatagramPacket(info, info.length, ip, porta);
+							socket.send(send);
 						}
 					}
 					if (value[0].equals("ATTACK") && !controle) {
@@ -257,6 +266,13 @@ public class BattleBoardGUI {
 					}else{
 						if(message.equals("aguarde")){
 							JOptionPane.showMessageDialog(null, "Aguarde a vez do adversario!");
+						}else{
+							if(message.equals("Fim")){
+								JOptionPane.showMessageDialog(null, "Voce perdeu!");
+								FimPartida fim = new FimPartida(tiros, socket, player2);
+								fim.show();
+								frame.dispose();
+							}
 						}
 					}
 				} catch (IOException e) {
