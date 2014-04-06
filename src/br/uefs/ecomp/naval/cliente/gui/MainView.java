@@ -58,7 +58,7 @@ public class MainView {
 	
 	private void init(){
 		users = new UsuariosOnline(this.player, tbPlayers, socketListPlayers);
-    	challenge = new OuveDesafio(socketSend, this);
+    	challenge = new OuveDesafio(socketSend, this, player);
     	users.start();
     	challenge.start();
 	}

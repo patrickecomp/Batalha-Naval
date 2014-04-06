@@ -55,7 +55,7 @@ public class BattleBoardGUI {
 		createJpPlayer1();
 		createJpPlayer2();
 		frame.pack();
-		frame.setSize(1200, 600);
+		frame.setSize(1200, 635);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
@@ -86,8 +86,7 @@ public class BattleBoardGUI {
 			for(int j = 0; j < 10; j++){
 				System.out.println(imagens[i][j]);
 				Icon icone = new ImageIcon(System.getProperty("user.dir") + File.separator+"images"+File.separator+imagens[i][j]);
-				JLabel lbl = new JLabel();
-				lbl.setIcon(icone);
+				JLabel lbl = new JLabel(icone);
 				lbl.setSize(59, 56);
 				lbl.setVisible(true);
 				board.add(lbl);
@@ -215,7 +214,7 @@ public class BattleBoardGUI {
 						controle = false;
 						if(won == 1){
 							JOptionPane.showMessageDialog(null, "Voce ganhou");
-							FimPartida fim = new FimPartida(tiros, socket, player2);
+							FimPartida fim = new FimPartida(tiros, player2);
 							fim.show();
 							frame.dispose();
 							info = "Fim".getBytes();
@@ -269,7 +268,7 @@ public class BattleBoardGUI {
 						}else{
 							if(message.equals("Fim")){
 								JOptionPane.showMessageDialog(null, "Voce perdeu!");
-								FimPartida fim = new FimPartida(tiros, socket, player2);
+								FimPartida fim = new FimPartida(tiros, player2);
 								fim.show();
 								frame.dispose();
 							}

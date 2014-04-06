@@ -113,6 +113,7 @@ public class Login {
         				socketCliente.setSoTimeout(1000);
         				DatagramPacket pacoteRetorno = new DatagramPacket(dadosRetorno, dadosRetorno.length);
         				socketCliente.receive(pacoteRetorno);
+        				System.out.println("trava aqui");
         				frase = new String(pacoteRetorno.getData());
         				
         				if(frase.trim().equals("Logado")){

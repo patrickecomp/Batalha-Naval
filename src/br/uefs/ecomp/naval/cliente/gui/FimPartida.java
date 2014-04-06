@@ -24,9 +24,13 @@ public class FimPartida {
 	private DatagramSocket socket;
 	private String player;
 	
-	public FimPartida(int tiros, DatagramSocket socket, String player1){
+	public FimPartida(int tiros, String player1){
 		this.tiros = tiros;
-		this.socket = socket;
+		try {
+			this.socket = new DatagramSocket();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
 		this.player = player1;
 	}
 	
@@ -74,6 +78,8 @@ public class FimPartida {
 		
 		layout.putConstraint(SpringLayout.WEST, lblLogin, 25, SpringLayout.WEST, principal);
 		layout.putConstraint(SpringLayout.NORTH, lblLogin, 30, SpringLayout.NORTH, principal);
+		layout.putConstraint(SpringLayout.EAST, btnLogin, -38, SpringLayout.EAST, principal);
+		layout.putConstraint(SpringLayout.SOUTH, btnLogin, -25, SpringLayout.SOUTH, principal);
 	
 	}	
 	private class SingIn implements ActionListener{
@@ -89,6 +95,7 @@ public class FimPartida {
 			socket.send(pacoteEnvio);
 			DatagramPacket pacoteRetorno = new DatagramPacket(dadosRetorno, dadosRetorno.length);
 			socket.receive(pacoteRetorno);
+			System.out.println("trava aqui");
 			frase = new String(pacoteRetorno.getData());
 			
 			if(frase.trim().equals("Logado")){
@@ -100,6 +107,7 @@ public class FimPartida {
 				System.out.println("Erro na conexão!");
 			}
 		}
+		
 	}
 	
 	
